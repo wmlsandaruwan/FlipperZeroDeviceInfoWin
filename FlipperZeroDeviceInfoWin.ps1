@@ -1,7 +1,3 @@
-param (
-    [string]$discord
-)
-
 # Collect device information
 $hostname = $env:COMPUTERNAME
 $username = $env:USERNAME
